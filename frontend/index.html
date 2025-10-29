@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Items</title>
+    <title>Mini App</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <main>
-    <h3>Items</h3>
-
+    <h2>Items</h2>
     <div class="row">
         <input id="text" type="text" placeholder="Text..." />
         <button id="save">Save</button>
         <button id="load">Load All</button>
     </div>
-
     <ul id="list"></ul>
+
+    <hr>
+
+    <h2>Anime Search (Jikan)</h2>
+    <div class="row">
+        <input id="q" type="text" placeholder="Search anime..." />
+        <button id="search">Search</button>
+    </div>
+    <pre id="result"></pre>
 </main>
 
 <script src="app.js"></script>
