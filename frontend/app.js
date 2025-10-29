@@ -1,7 +1,9 @@
 // ---- Config ----
-const API_ITEMS = "http://localhost:8080/api/items";
-const API_ANIME = "http://localhost:8080/api/anime";
-const API_ADD_ANIME = "http://localhost:8080/api/anime/add";
+const API_BASE = "http://91.98.68.128:8080";
+const API_ITEMS = `${API_BASE}/api/items`;
+const API_ANIME = `${API_BASE}/api/anime`;
+const API_ADD_ANIME = `${API_BASE}/api/anime/add`;
+const API_ADDED = `${API_BASE}/api/anime/add`;
 
 // ---- Helpers ----
 const $ = (id) => document.getElementById(id);
@@ -78,8 +80,6 @@ document.addEventListener("click", async (e) => {
 });
 
 // ---- Load added animes ----
-const API_ADDED = "http://localhost:8080/api/anime/add";
-
 function addedCardTemplate(a) {
     const img = a.imageUrl || "";
     const title = a.title || "Untitled";
