@@ -1,6 +1,7 @@
 // ---- Config ----
-const API_ITEMS = "http://localhost:8080/api/items";
-const API_ANIME = "http://localhost:8080/api/anime";
+const API_ITEMS = "http://localhost:8080/api/items";     // Items (Mongo)
+const API_ANIME = "http://localhost:8080/api/anime";     // Jikan-Proxy (Search)
+const API_ADD_ANIME = "http://localhost:8080/api/anime/add"; // Add selected anime
 
 // ---- Helpers ----
 const $ = (id) => document.getElementById(id);
@@ -35,27 +36,46 @@ async function loadItems() {
 }
 
 // ---- Anime (Jikan via Backend) ----
+function cardTemplate(a) {
+    const img = a.images?.jpg?.image_url || a.images?.webp?.image_url || "";
+    const title = a.title || a.title_english || a.title_japanese || "Untitled";
+    const id = a.mal_id;
+    return `
+    <div class="card" data-id="${id}" data-title="${title}" data-img="${img}">
+      <img src="${img}" alt="${title}">
+      <div class="title">${title}</div>
+      <div class="save">Klicken, um zu speichern</div>
+    </div>
+  `;
+}
+
 async function searchAnime() {
     const q = $("q").value.trim();
     if (!q) return notify("Enter a query");
     const res = await fetch(`${API_ANIME}?q=${encodeURIComponent(q)}`);
     if (!res.ok) return notify("Search failed");
-    const json = await res.json();             // Backend liefert Jikan-JSON
+    const json = await res.json();             // Jikan JSON vom Backend
     const items = (json && json.data) ? json.data : [];
-
-    const cards = items.slice(0, 12).map(a => {
-        const img = a.images?.jpg?.image_url || a.images?.webp?.image_url || "";
-        const title = a.title || a.title_english || a.title_japanese || "Untitled";
-        return `
-      <div class="card">
-        <img src="${img}" alt="${title}">
-        <div class="title">${title}</div>
-      </div>
-    `;
-    }).join("");
-
-    document.getElementById("cards").innerHTML = cards || "<p>No results.</p>";
+    $("cards").innerHTML = items.slice(0, 24).map(cardTemplate).join("") || "<p>No results.</p>";
 }
+
+// ---- Click to add selected anime ----
+document.addEventListener("click", async (e) => {
+    const card = e.target.closest(".card");
+    if (!card) return;
+    const body = {
+        malId: Number(card.dataset.id),
+        title: card.dataset.title,
+        imageUrl: card.dataset.img
+    };
+    const res = await fetch(API_ADD_ANIME, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+    if (res.ok) notify(`Gespeichert: ${body.title}`);
+    else notify("Speichern fehlgeschlagen");
+});
 
 // ---- Wire up ----
 $("save").onclick = saveItem;
