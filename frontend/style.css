@@ -1,0 +1,11 @@
+:root { font-family: system-ui, Arial, sans-serif; }
+body { margin: 0; background: #0f1115; color: #eaecef; }
+main { max-width: 640px; margin: 48px auto; padding: 24px; background:#171a21; border-radius:12px; }
+h3 { margin-top: 0; }
+.row { display: flex; gap: 8px; margin-bottom: 16px; }
+input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid #2a2f3a; background:#0f1115; color:#eaecef; }
+button { padding: 10px 14px; border: 0; border-radius: 8px; cursor: pointer; }
+#save { background:#3b82f6; color:#fff; }
+#load { background:#334155; color:#eaecef; }
+ul { list-style: none; padding-left: 0; margin: 0; }
+li { padding: 8px 10px; border: 1px solid #2a2f3a; border-radius:8px; margin-bottom:8px; }
