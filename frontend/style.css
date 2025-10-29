@@ -10,4 +10,9 @@ button#load, button#search { background:#334155; }
 ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 li { padding: 8px 10px; border: 1px solid #2a2f3a; border-radius: 8px; }
 hr { border: 0; border-top: 1px solid #2a2f3a; margin: 20px 0; }
-pre { white-space: pre-wrap; border: 1px solid #2a2f3a; border-radius: 8px; padding: 12px; background:#0f1115; min-height: 80px; }
+
+/* Anime-Karten */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.card { background:#0f1115; border:1px solid #2a2f3a; border-radius:10px; overflow:hidden; }
+.card img { width:100%; height:220px; object-fit:cover; display:block; }
+.card .title { padding:8px; font-size:14px; line-height:1.2; text-align:center; }
