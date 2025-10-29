@@ -1,7 +1,7 @@
 // ---- Config ----
-const API_ITEMS = "http://localhost:8080/api/items";     // Items (Mongo)
-const API_ANIME = "http://localhost:8080/api/anime";     // Jikan-Proxy (Search)
-const API_ADD_ANIME = "http://localhost:8080/api/anime/add"; // Add selected anime
+const API_ITEMS = "http://localhost:8080/api/items";
+const API_ANIME = "http://localhost:8080/api/anime";
+const API_ADD_ANIME = "http://localhost:8080/api/anime/add";
 
 // ---- Helpers ----
 const $ = (id) => document.getElementById(id);
@@ -54,7 +54,7 @@ async function searchAnime() {
     if (!q) return notify("Enter a query");
     const res = await fetch(`${API_ANIME}?q=${encodeURIComponent(q)}`);
     if (!res.ok) return notify("Search failed");
-    const json = await res.json();             // Jikan JSON vom Backend
+    const json = await res.json();
     const items = (json && json.data) ? json.data : [];
     $("cards").innerHTML = items.slice(0, 24).map(cardTemplate).join("") || "<p>No results.</p>";
 }
@@ -77,10 +77,35 @@ document.addEventListener("click", async (e) => {
     else notify("Speichern fehlgeschlagen");
 });
 
+// ---- Load added animes ----
+const API_ADDED = "http://localhost:8080/api/anime/add";
+
+function addedCardTemplate(a) {
+    const img = a.imageUrl || "";
+    const title = a.title || "Untitled";
+    return `
+    <div class="card">
+      <img src="${img}" alt="${title}">
+      <div class="title">${title}</div>
+    </div>
+  `;
+}
+
+async function loadAddedAnimes() {
+    const res = await fetch(API_ADDED);
+    if (!res.ok) return notify("Load added animes failed");
+    const data = await res.json();
+    $("added").innerHTML =
+        (data && data.length)
+            ? data.map(addedCardTemplate).join("")
+            : "<p>No added animes yet.</p>";
+}
+
 // ---- Wire up ----
 $("save").onclick = saveItem;
 $("load").onclick = loadItems;
 $("search").onclick = searchAnime;
+$("loadAdded").onclick = loadAddedAnimes;
 
 // Optional: direkt beim Laden Items holen
 // loadItems();

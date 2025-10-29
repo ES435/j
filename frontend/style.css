@@ -6,13 +6,14 @@ h2 { margin: 0 0 12px; }
 .row { display: flex; gap: 8px; margin-bottom: 12px; }
 input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid #2a2f3a; background:#0f1115; color:#eaecef; }
 button { padding: 10px 14px; border: 0; border-radius: 8px; cursor: pointer; background:#3b82f6; color:#fff; }
-button#load, button#search { background:#334155; }
+button#load, button#search, button#loadAdded { background:#334155; }
 ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 li { padding: 8px 10px; border: 1px solid #2a2f3a; border-radius: 8px; }
 hr { border: 0; border-top: 1px solid #2a2f3a; margin: 20px 0; }
 
 /* Anime-Karten */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-.card { background:#0f1115; border:1px solid #2a2f3a; border-radius:10px; overflow:hidden; }
+.card { background:#0f1115; border:1px solid #2a2f3a; border-radius:10px; overflow:hidden; cursor:pointer; }
 .card img { width:100%; height:220px; object-fit:cover; display:block; }
 .card .title { padding:8px; font-size:14px; line-height:1.2; text-align:center; }
+.card .save { padding:6px; text-align:center; font-size:12px; opacity:.8; }
